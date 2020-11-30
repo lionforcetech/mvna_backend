@@ -89,6 +89,8 @@ const searchglobal = function(req,res) {
   {
     var result_data = {};
     res.status(200).json(result_data); 
+
+    //else condition
   }
 };
 
