@@ -60,7 +60,7 @@ const searchglobal = function(req,res) {
 
   var data = data + ` group by menu_id limit 5 `;
   //console.log(`SELECT * FROM ${table_name}`);
-
+  if(search !== '' && search != undefined) {
   Database.getDb().query(data, function (err, result) {
     if (err) {
       res.status(500).send(err);
@@ -84,6 +84,12 @@ const searchglobal = function(req,res) {
     }
   });
 
+  }
+  else
+  {
+    var result_data = {};
+    res.status(200).json(result_data); 
+  }
 };
 
 // ============================custom=============================
