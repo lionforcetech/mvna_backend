@@ -17,6 +17,7 @@ var storage = multer.diskStorage({
   }
 })
 var fileFilter = (req, file, cb) => {
+  console.log('ggg');
   if (file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype === 'application/pdf'||file.mimetype === 'application/doc' || file.mimetype === 'application/docx' || file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
     cb(null, true);
   } else {
@@ -71,9 +72,11 @@ const index = (req, res)=>{
 // ============================create=============================
 
   const create = (req, res)=>{
+    //console.log('working...');
     let upload = multer({ storage: storage, fileFilter: fileFilter}).single('docs');
 
-    upload(req, res, function(err) {
+    
+      upload(req, res, function(err) { 
         if (req.fileValidationError) {
            res.send(req.fileValidationError);
       }else if (err instanceof multer.MulterError) {
@@ -81,16 +84,17 @@ const index = (req, res)=>{
       }else if (err) {
            res.send(err);
       }
-      console.log(req.file);
+     // console.log(req.file);
     var id = req.body.id;
     if(id){
         var response = updatedocs(req.body);  
         }else{
          var response = validatedocs(req.body);  
         }
-      if(response.error || !id ? !req.file : null){        
+
+      if(response.error || !id ? !req.docs : null){        
             var errorMessage=[];
-            if (!id && req.file === undefined) {
+            if (!id && req.docs === undefined) {
               errorMessage.push({ field: 'Docs', message: 'Document is not allowed to empty' })
             }
             if(response.error){
@@ -102,8 +106,8 @@ const index = (req, res)=>{
  
           } else{ 
     var element = req.body;
-    if(req.file){
-        var path = req.file.destination + "/" + req.file.filename;
+    if(req.docs){
+        var path = req.docs.destination + "/" + req.docs.filename;
         element.docs = path.replace("./", "");
       }
         if (id && id !=""){
