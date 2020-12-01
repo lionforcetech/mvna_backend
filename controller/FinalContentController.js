@@ -87,7 +87,7 @@ const searchglobal = function(req,res) {
   }
   else
   {
-    var result_data = {'data' : ''};
+    var result_data = {'data' : []};
     res.status(200).json(result_data); 
   }
 };
