@@ -77,13 +77,13 @@ const index = (req, res)=>{
 
     
       upload(req, res, function(err) { 
-        if (req.fileValidationError) {
+       /* if (req.fileValidationError) {
            res.send(req.fileValidationError);
       }else if (err instanceof multer.MulterError) {
            res.send(err);
       }else if (err) {
            res.send(err);
-      }
+      }*/
      // console.log(req.file);
     var id = req.body.id;
     if(id){
@@ -91,8 +91,8 @@ const index = (req, res)=>{
         }else{
          var response = validatedocs(req.body);  
         }
-
-      if(response.error || !id ? !req.docs : null){        
+        console.log(req.docs);
+        if(response.error || !id ? !req.file : null){         
             var errorMessage=[];
             if (!id && req.docs === undefined) {
               errorMessage.push({ field: 'Docs', message: 'Document is not allowed to empty' })
@@ -185,7 +185,7 @@ const index = (req, res)=>{
 
    validatedocs = (user)=>{
     const JoiSchema = Joi.object({ 
-      name : Joi.string().required(),
+    //  name : Joi.string().required(),
 
   }).options({ abortEarly: false }); 
 
