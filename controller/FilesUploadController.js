@@ -95,7 +95,7 @@ const index = (req, res)=>{
         if(response.error || !id ? !req.docs : null){         
             var errorMessage=[];
             if (!id && req.docs === undefined) {
-              errorMessage.push({ field: 'Docs', message: 'Document is not allowed to empty' })
+              errorMessage.push({ field: 'Docs', message: 'Document is not allowed to empty', doc : req.docs })
             }
             if(response.error){
               response.error.details.forEach(element => {
