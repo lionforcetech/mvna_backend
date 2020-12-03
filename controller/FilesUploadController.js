@@ -18,7 +18,7 @@ var storage = multer.diskStorage({
 })
 var fileFilter = (req, file, cb) => {
   console.log(file.mimetype);
-  if (file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype === 'application/pdf'||file.mimetype === 'application/doc' || file.mimetype === 'application/docx' || file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.mimetype=='application/octet-stream') {
+  if (file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype === 'application/pdf'|| file.mimetype === 'application/msword' || file.mimetype === 'application/doc' || file.mimetype === 'application/docx' || file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.mimetype=='application/octet-stream') {
     cb(null, true);
   } else {
     cb(null, false);
@@ -76,7 +76,7 @@ const index = (req, res)=>{
     let upload = multer({ storage: storage, fileFilter: fileFilter}).single('docs');
      // console.log(upload);    
       upload(req, res, function(err) { 
-        console.log(req);
+        //console.log(req);
        if (req.fileValidationError) {
            res.send(req.fileValidationError);
       }else if (err instanceof multer.MulterError) {
