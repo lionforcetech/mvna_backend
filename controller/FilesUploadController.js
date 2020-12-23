@@ -35,9 +35,9 @@ const index = (req, res)=>{
     var search = req.query.search;
     var status_connection = req.query.status_connection;
    
-    var data = `SELECT * FROM ${table_name}`
+    var data = `SELECT *,REPLACE(docs,"public/uploads/docs/",'') as docs FROM ${table_name}`
 
-    if(status_connection && status_connection==1){
+    if(status_connection && status_connection==1){ 
         var data= data + ` WHERE status = ${config.get('status.active')}`;
     }else{
         var data= data + ` WHERE status != ${config.get('status.delete')}`;

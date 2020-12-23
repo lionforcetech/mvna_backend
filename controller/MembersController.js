@@ -37,7 +37,7 @@ const index = (req, res)=>{
     var status_connection = req.query.status_connection;
    var country =req.query.country;
     // console.log(req.headers);
-    var data = `SELECT *,REPLACE(icon,"public/uploads/",'') as icon FROM ${table_name}`
+    var data = `SELECT *,REPLACE(icon,"public/uploads/",'') as icon FROM ${table_name}` 
 
     if(status_connection && status_connection==1){
         var data= data + ` WHERE status = ${config.get('status.active')}`;
