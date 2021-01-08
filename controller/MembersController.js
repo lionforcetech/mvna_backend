@@ -163,7 +163,7 @@ const index = (req, res)=>{
         var result_data = {'status':'success',data:result};
         res.status(200).json(result_data);
   });
-    };
+    };  
 
   //  ====================status change================ 
     const statusChange = (req, res)=>{

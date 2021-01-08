@@ -144,7 +144,7 @@ app.post('/login', async (req, res) => {
   // const SALTROUND=10;
   // let hashedPassword=bcrypt.hashSync(req.body.password,SALTROUND);
   if(req.body.email && req.body.password){
-    db.getDb().query(`SELECT * FROM users WHERE email = '${req.body.email}'`, function (error, result) {
+    db.getDb().query(`SELECT * FROM users WHERE email = '${req.body.email}' && status=1`, function (error, result) {
       if (error) { 
         res.status(500).json({ "status": "Server Error", "error": error });
       }

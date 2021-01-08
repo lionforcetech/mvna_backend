@@ -12,7 +12,8 @@ var storage = multer.diskStorage({
     cb(null, './public/uploads/docs')
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+   // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+   const uniqueSuffix = Math.floor(100 + Math.random() * 999);
     cb(null, uniqueSuffix + file.originalname)
   }
 })
@@ -104,19 +105,24 @@ const index = (req, res)=>{
             res.status(422).json(errorMessage);
  
           } else{ 
-    var element = req.body;
+    var element = req.body;   
+
+
+
+
+    
   //  console.log(req);
     if(req.file){
       var path = req.file.destination + "/" + req.file.filename;
         element.docs = path.replace("./", "");
       }
         if (id && id !=""){
-        element.updated_by = req.headers['id'];
+        element.updated_by = req.headers['id'] || 1;
         var sql = `UPDATE ${table_name} SET name = '${element.name}',docs = '${element.docs}', updated_by = ${element.updated_by} WHERE id = ${id}`;
         var message = "Update";
       } else {
         element.status=config.get('status.active');
-        element.created_by = req.headers['id'];
+        element.created_by = req.headers['id'] || 1;
 
         var sql = `INSERT INTO ${table_name} (name,docs,status,created_by) VALUES ("${element.name}","${element.docs}",${element.status},${element.created_by})`;
         var message = "Created";
@@ -126,7 +132,7 @@ const index = (req, res)=>{
           res.status(500).send(error);
         }else{
           element.id=response.insertId;
-            activity.activity_store({user_log_id:req.headers['userlogid'],jwt_token:req.headers['authorization'],table_name:table_name,primary_id:response.insertId,event:'POST',old_value:'NULL',new_value:element,url:req.url,ip_address:req.ip,user_agent:req.headers['user-agent'],status:1,created_by:req.headers['id']},(acterror,actresult)=>{
+            activity.activity_store({user_log_id:req.headers['userlogid'],jwt_token:req.headers['authorization'],table_name:table_name,primary_id:response.insertId,event:'POST',old_value:'NULL',new_value:element,url:req.url,ip_address:req.ip,user_agent:req.headers['user-agent'],status:1,created_by:1},(acterror,actresult)=>{
               if(actresult !== "success"){res.status(500).send(acterror);}
               var result_data = {'status':'success','message':'Document'+message +' Successfully' };
               res.status(200).json(result_data);
