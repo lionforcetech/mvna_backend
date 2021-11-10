@@ -65,6 +65,7 @@ router.get("/twitter", require('../controller/TwitterController').index); //save
 
 router.get("/search",require('../controller/FinalContentController').searchglobal);
 
+router.get("/pdf-convert/:id",require("../controller/FinalContentController").get_pdf);
 
 router.get('/run',(req,res)=>{
     res.render('index')

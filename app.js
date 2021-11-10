@@ -8,17 +8,20 @@ const db = require('./database/server');
 const authConfig = require('./config/auth.config');
 const multer=require('multer');
 const upload = multer({dest:'public/uploads/'});
+const pdf = require('express-pdf');
 // var fileUpload=require('express-fileupload'); 
 const app = express();
 
 
-app.use(cors());     
+app.use(cors());  
+app.use(pdf);   
 var timeout = require('connect-timeout'); 
 app.use(timeout('200s')); 
 const Twit = require('twit')
 const path = require('path');
 // app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname,'public')));
+app.use('/docs', express.static(path.join(__dirname, 'docs')));
 // ----body-parse------
 app.use(bodyParser.json({limit: '500mb'}));
 app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
